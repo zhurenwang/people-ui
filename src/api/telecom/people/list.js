@@ -43,4 +43,13 @@ export function del(id) {
   })
 }
 
+export function exportData(data) {
+  return request({
+    url: '/telecom/people/exportData/',
+    method: 'post',
+    data: data
+  })
+}
+
+
 

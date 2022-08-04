@@ -61,17 +61,27 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-wallet"
+          icon="el-icon-bottom"
           size="mini"
           @click="importData"
           v-hasPermi="['telecom:people:importData']"
         >导入</el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-top"
+          size="mini"
+          @click="exportData"
+          v-hasPermi="['telecom:people:exportData']"
+        >导出</el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="55" align="center" fixed/>
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="名称" align="center" show-overflow-tooltip prop="name"/>
       <el-table-column label="性别" align="center" show-overflow-tooltip prop="sex">
@@ -80,17 +90,29 @@
         </template>
       </el-table-column>
       <el-table-column label="民族" align="center" show-overflow-tooltip prop="nation"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="籍贯（省）" align="center" show-overflow-tooltip prop="province"/>
+      <el-table-column label="籍贯（地市）" align="center" show-overflow-tooltip prop="city"/>
+      <el-table-column label="身份证号码" align="center" show-overflow-tooltip prop="idCard"/>
+      <el-table-column label="毕业院校" align="center" show-overflow-tooltip prop="gradutionSchool"/>
+      <el-table-column label="毕业时间" align="center" show-overflow-tooltip prop="gradutionTime"/>
+      <el-table-column label="学历" align="center" show-overflow-tooltip prop="education"/>
+      <el-table-column label="学位" align="center" show-overflow-tooltip prop="academicDegree"/>
+      <el-table-column label="所学专业" align="center" show-overflow-tooltip prop="major"/>
+      <el-table-column label="专业技术职称" align="center" show-overflow-tooltip prop="professionalTechnicalTitles"/>
+      <el-table-column label="政治面貌" align="center" show-overflow-tooltip prop="politicalOutlook"/>
+      <el-table-column label="获得的荣誉" align="center" show-overflow-tooltip prop="honer"/>
+      <el-table-column label="退伍军人" align="center" show-overflow-tooltip prop="veteran"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="更新时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -147,6 +169,84 @@
                 <el-input v-model="form.nation" placeholder="请输入民族"/>
               </el-form-item>
             </el-col>
+            <el-col :span="12">
+              <el-form-item label="省份" prop="province">
+                <el-input v-model="form.province" placeholder="请输入省份"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="城市" prop="city">
+                <el-input v-model="form.city" placeholder="请输入城市"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="身份证号码" prop="idCard">
+                <el-input v-model="form.idCard" placeholder="请输入身份证号码"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="毕业院校" prop="gradutionSchool">
+                <el-input v-model="form.gradutionSchool" placeholder="请输入毕业院校"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="毕业时间" prop="gradutionTime">
+                <el-date-picker
+                  style="width: 100%"
+                  v-model="form.gradutionTime"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="学历" prop="education">
+                <el-input v-model="form.education" placeholder="请输入学历"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="学位" prop="academicDegree">
+                <el-input v-model="form.academicDegree" placeholder="请输入学位"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="所学专业" prop="major">
+                <el-input v-model="form.major" placeholder="请输入所学专业"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="技术职称" prop="professionalTechnicalTitles">
+                <el-input v-model="form.professionalTechnicalTitles" placeholder="请输入专业技术职称"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="政治面貌" prop="politicalOutlook">
+                <el-input v-model="form.politicalOutlook" placeholder="请输入政治面貌"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="获得的荣誉" prop="honer">
+                <el-input v-model="form.honer" placeholder="请输入获得的荣誉"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="退伍军人" prop="veteran">
+                <el-input v-model="form.veteran" placeholder="请输入退伍军人"/>
+              </el-form-item>
+            </el-col>
           </el-row>
         </el-card>
       </el-form>
@@ -175,7 +275,7 @@
 </template>
 
 <script>
-import { pageList, detail, add, edit, del } from "@/api/telecom/people/list";
+import { pageList, detail, add, edit, del, exportData } from "@/api/telecom/people/list";
 import {Constant} from "../../../base";
 import {getToken} from "@/utils/auth";
 
@@ -361,6 +461,11 @@ export default {
       this.importOpen = true;
       this.importTitle = "导入人员信息";
     },
+    exportData() {
+      exportData(this.queryParams).then(response => {
+        window.location.href = process.env.VUE_APP_BASE_API + "/common/download?fileName="+response.msg;
+      })
+    },
 
     handleSuccess(response, file, fileList) {
       console.info("HandleSuccess=== " + JSON.stringify(response));
@@ -376,3 +481,22 @@ export default {
   }
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+  background-color: #ebeef5;
+}
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #ccc;
+}
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 1);
+}
+</style>
+
