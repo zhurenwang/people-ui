@@ -1,0 +1,410 @@
+//$main-bg-color:#6777ef;//主背景色
+$main-bg-color: #2A3F54;
+
+$titleColor:#34395e;
+$contextColor:#212529;
+$tipColor: #98a6ad;
+$borderColor: #ededed;
+
+@mixin medium-font{
+  font-family: PingFangSC-Medium,PingFang SC Medium;
+  font-weight: 500;
+}
+@mixin semibold-font{
+  font-family: PingFangSC-Semibold,PingFang SC Semibold;
+  font-weight: 700;
+}
+
+%title-font{
+  //font-size: 20px;
+  font-size: 16px;
+  color: $titleColor;
+  @include semibold-font();
+}
+%context-font{
+  font-size: 14px;
+  color: $contextColor;
+}
+%tip-font{
+  font-size: 12px;
+  color: $tipColor;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+}
+html,body,#app,.el-container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular, PingFang SC Regular, PingFangSC, PingFang SC,  "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;;
+}
+.container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.el-header{
+  padding: 0;
+  //height: 70px;
+  height: 50px;
+  background: $main-bg-color;
+  background: linear-gradient(to bottom, #2A3F54 0%, #293c54 100%);
+  display: flex;
+  justify-content: flex-start;
+  .header-sidebar{
+    //width: 274px;
+    //flex-basis: 274px;
+    width: 224px;
+    flex-basis: 224px;
+    //background: #ffffff;
+    background: #2A3F54;
+    background: linear-gradient(to bottom, #2A3F54 0%, #293c54 100%);
+    color: #ffffff;
+    transition: all 0.2s linear 0.1s;
+    position: relative;
+    z-index: 999;
+    //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: rgba(0,0,0,.25) 1px 0 0, inset rgba(255,255,255,.16) 0 1px 0;
+    //border-bottom:1px solid $borderColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @extend %title-font;
+  }
+  .header-sidebar-collapse{
+    width: 88px;
+    flex-basis: 88px;
+  }
+  .header-content{
+    position: relative;
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    //color: rgba(255,255,255,0.8);
+      color: #fff;
+    .header-info{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    i{
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .menu-expand{
+      font-size: 26px;
+      color: #ffffff;
+    }
+    .message-box{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 20px;
+    }
+    .el-dropdown-link{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      //color: rgba(255,255,255,0.8);
+      color: #fff;
+      cursor: pointer;
+    }
+    .username{
+      font-size: 14px;
+      font-style: normal;
+    }
+
+  }
+
+}
+.el-aside{
+  position: relative;
+  z-index: 999;
+  padding-left: 12px;
+  padding-right: 12px;
+  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: rgba(0,0,0,.25) 0 1px 0, inset rgba(255,255,255,.16) 0 1px 0;
+  background: #2A3F54;
+  background: linear-gradient(to bottom, #2A3F54 0%, #293c54 100%);
+}
+.el-menu--collapse .el-submenu__icon-arrow,.el-menu--collapse .submenu-text{
+  display: none;
+}
+.el-menu{
+  border:none;
+  //width: 250px;
+  width: 200px;
+}
+.el-menu--collapse {
+  width: 64px!important;
+}
+.el-menu-item,.el-submenu__title{
+  //color: #868e96;
+  color: #fff;
+  background: none;
+}
+.el-submenu [class^="el-icon-"],.el-menu-item [class*="el-icon-"]{
+  font-size: 20px;
+}
+
+.el-menu [class^="el-icon-"]:before{
+  margin-right: 20px;
+}
+.el-menu-item:hover,.el-menu-item:hover i{
+  //color: #6777ef;
+  color: #11ceff;
+  font-weight: 600;
+  background: none;
+}
+.el-submenu__title:hover{
+  background: none;
+}
+.el-menu-item.is-active, .el-menu-item.is-active i{
+  //color: #6777ef;
+  color: #11ceff;
+  font-weight: 600;
+  background: none;
+}
+.el-menu-item.is-active:before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 25px;
+  width: 4px;
+  //background-color: #6777ef;
+  background-color: #11ceff;
+}
+.el-menu--collapse .el-menu-item.is-active,.el-menu--collapse .el-submenu.is-active{
+  box-shadow: 0 4px 8px #acb5f6;
+  //background-color: #6777ef;
+  background-color: #11ceff;
+  border-radius: 3px;
+  i{
+    color: #fff;
+    font-size: 24px;
+  }
+}
+.menu-group{
+  font-size: 12px;
+  color: #bcc1c6;
+  height: 24px;
+  line-height: 24px;
+  @include semibold-font();
+}
+.el-main{
+  background: #fafdfb;
+  padding: 0;
+  .section-header{
+    height: 72px;
+    line-height: 72px;
+    border-radius: 0;
+    border-top: 1px solid #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    background-color: #fff;
+    position: relative;
+    padding-left: 35px;
+    font-size: 22px;
+    color: $titleColor;
+    @include semibold-font();
+  }
+  .section-container{
+    padding: 35px 35px;
+  }
+}
+.list-content{
+  position: relative;
+  border:1px solid $borderColor;
+  border-radius: 3px;
+  background: #ffffff;
+  .condition-box{
+    padding: 0px 30px 5px;
+    border-bottom:1px solid $borderColor;
+    .el-row{
+      margin-top:12px;
+    }
+    .el-select{
+      display: block;
+    }
+    label{
+      height: 32px;
+      line-height: 32px;
+      @extend %context-font;
+    }
+    .query-box{
+      height: 52px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+  }
+  .el-table{
+
+    thead tr th{
+      background: #f5f7fa;
+      font-size: 16px;
+      @include semibold-font();
+    }
+    .odd-row{
+      background: oldlace;
+    }
+
+    .even-row{
+      background: #f0f9eb;
+    }
+  }
+  .pagination-box{
+    padding: 15px 12px;
+  }
+}
+
+
+.title-text{
+  @extend %title-font;
+  line-height: 32px;
+  height: 32px;
+}
+.context-text{
+  @extend %context-font;
+  line-height: 28px;
+  height: 28px;
+}
+.tip-text{
+  @extend %tip-font;
+  line-height: 24px;
+  height: 24px;
+}
+
+.m-menu {
+    background-color: $main-bg-color;
+    margin-top: 1px;
+}
+
+.m-menu .el-menu-item {
+    background-color: $main-bg-color;
+}
+
+.m-menu .el-submenu__title i {
+    color: #fff;
+}
+
+.el-menu--popup {
+    background-color: $main-bg-color;
+    box-shadow: rgba(0,0,0,.25) 0 1px 0, inset rgba(255,255,255,.16) 0 1px 0;
+}
+
+.el-menu--popup .el-menu-item {
+    height: 41px;
+    line-height: 41px;
+}
+
+.m-menu .el-submenu .el-menu-item {
+    height: 41px;
+    line-height: 41px;
+}
+
+.m-app-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-main {
+    background: #f1f1f1;
+    background: linear-gradient(to bottom, #f1f1f1 0%,#f2f2f2 100%);
+}
+
+.el-table {
+    color: #000000;
+}
+
+.el-table .cell {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.el-table thead {
+    color: #000000;
+}
+
+.el-link {
+    color: #1d1d1d;
+}
+.el-link.el-link--info {
+    color: #1d1d1d;
+}
+.el-link.el-link--primary {
+    color: #2b6ad8;
+}
+.el-link.el-link--success {
+    color: #26af1e;
+}
+.el-link.el-link--warning {
+    color: #e65f4e;
+}
+.el-link.el-link--danger {
+    color: #ff0a09;
+}
+
+.el-checkbox__inner {
+    border-color: #214454;
+    zoom: 120%;
+}
+.el-checkbox__original {
+    zoom: 120%;
+}
+
+
+.m-form .el-form-item__label {
+    color: #2d2d2d;
+}
+
+.m-form-plain .el-form-item__label {
+    color: #9c9c9c;
+}
+
+.m-form-plain .el-form-item__content {
+    color: #000000;
+}
+
+/*
+.el-input__inner {
+    border: 1px solid #bdbdbd;
+}
+.el-input__inner:hover, .el-input__inner:focus {
+    border: 1px solid #409eff;
+}
+*/
+
+.el-select .el-input__inner:hover, .el-select .el-input__inner:focus {
+    border: 1px solid #409eff;
+}
+
+.el-input-group__append, .el-input-group__prepend {
+    padding: 0 15px;
+    background-color: rgb(243, 243, 243);
+    color: #5e5e5e;
+    border: 1px solid #bdbdbd;
+}
+.el-input-group__append {
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.el-input-group__prepend {
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+div.el-table .el-table__body-wrapper::-webkit-scrollbar {
+    height: 12px !important;
+}
+.el-scrollbar__wrap::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+}

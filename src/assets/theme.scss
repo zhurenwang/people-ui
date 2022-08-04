@@ -1,0 +1,10 @@
+/* 改变主题色变量 */
+//$--color-primary: #2d95dd;
+$--border-color-light: #bdbdbd;
+
+$--input-border: 1px solid #bdbdbd;
+$--input-focus-border: #409eff;
+$--input-hover-border: #409eff;
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import "~element-ui/packages/theme-chalk/src/index";
