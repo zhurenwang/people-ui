@@ -51,5 +51,13 @@ export function exportData(data) {
   })
 }
 
+export function getOption() {
+  return request({
+    url: '/telecom/people/getOption/',
+    method: 'post',
+  })
+}
+
+
 
 

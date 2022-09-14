@@ -1,7 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-      <el-form-item label="名称" prop="name">
+      <el-form-item label="企业名称" prop="enterpriseId">
+        <el-select v-model="queryParams.enterpriseId" placeholder="请选择企业名称" style="width: 100%" clearable>
+          <el-option v-for="item in enterpriseOptions"
+                     :key="item.value"
+                     :label="item.text"
+                     :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="人员名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入名称"/>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
@@ -83,7 +92,8 @@
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" fixed/>
       <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="名称" align="center" show-overflow-tooltip prop="name"/>
+      <el-table-column label="企业名称" align="center" show-overflow-tooltip prop="enterpriseName"/>
+      <el-table-column label="人员名称" align="center" show-overflow-tooltip prop="name"/>
       <el-table-column label="性别" align="center" show-overflow-tooltip prop="sex">
         <template slot-scope="scope">
           <span>{{Constant.format(Constant.SexType, scope.row.sex)}}</span>
@@ -98,6 +108,7 @@
       <el-table-column label="学历" align="center" show-overflow-tooltip prop="education"/>
       <el-table-column label="学位" align="center" show-overflow-tooltip prop="academicDegree"/>
       <el-table-column label="所学专业" align="center" show-overflow-tooltip prop="major"/>
+      <el-table-column label="职务" align="center" show-overflow-tooltip prop="post"/>
       <el-table-column label="专业技术职称" align="center" show-overflow-tooltip prop="professionalTechnicalTitles"/>
       <el-table-column label="政治面貌" align="center" show-overflow-tooltip prop="politicalOutlook"/>
       <el-table-column label="获得的荣誉" align="center" show-overflow-tooltip prop="honer"/>
@@ -244,7 +255,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="退伍军人" prop="veteran">
-                <el-input v-model="form.veteran" placeholder="请输入退伍军人"/>
+                <el-input v-model="form.veteran" placeholder="请输入是否退伍军人"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="职务" prop="post">
+                <el-input v-model="form.post" placeholder="请输入职务"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -257,12 +273,28 @@
     </el-dialog>
 
     <el-dialog :title="importTitle" :visible.sync="importOpen" width="400px" append-to-body>
+      <el-form>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="" prop="enterprise">
+              <el-select v-model="upload.data.enterpriseId" placeholder="请选择导入企业" style="width: 100%">
+                <el-option v-for="item in enterpriseOptions"
+                           :key="item.value"
+                           :label="item.text"
+                           :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
       <el-upload
         ref="upload"
         class="upload-demo"
         drag
         :headers="upload.headers"
         :action="upload.url"
+        :data="upload.data"
         accept=".xlsx, .xls"
         :on-success="handleSuccess"
         multiple>
@@ -275,7 +307,7 @@
 </template>
 
 <script>
-import { pageList, detail, add, edit, del, exportData } from "@/api/telecom/people/list";
+import { pageList, detail, add, edit, del, exportData, getOption } from "@/api/telecom/people/list";
 import {Constant} from "../../../base";
 import {getToken} from "@/utils/auth";
 
@@ -285,7 +317,9 @@ export default {
   dicts: ['sys_normal_disable'],
   data() {
     return {
+      enterpriseOptions:[],
       upload: {
+        data:{enterpriseId: undefined},
         // 是否显示弹出层（用户导入）
         open: false,
         // 弹出层标题（用户导入）
@@ -351,9 +385,16 @@ export default {
   },
   created() {
     this.getList();
+    this.getEnterpriseOption();
   },
 
   methods: {
+    getEnterpriseOption(){
+      getOption().then(response => {
+          this.enterpriseOptions = response.data;
+        }
+      );
+    },
     /** 查询列表 */
     getList() {
       this.loading = true;
@@ -458,6 +499,7 @@ export default {
     /** 导入按钮操作 */
     importData() {
       //this.reset();
+      this.upload.data.enterpriseId = undefined
       this.importOpen = true;
       this.importTitle = "导入人员信息";
     },
